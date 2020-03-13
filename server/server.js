@@ -20,6 +20,27 @@ app.post('/todos', (req, res) => {
       .then( doc => res.send(doc), e => res.status(400).send(e) )
 })
 
+app.get('/todos', (req, res) => {
+      Todo.find().then((todos) => {
+            res.send({todos})
+      }, (e) => {
+            res.status(400).send(e)
+            console.log('Unable to get file', e)
+      })
+})
+
+
+// User route
+
+app.post('/user', (req, res) => {
+      const user = new User({
+            email: req.body.email
+      })
+
+      user.save()
+      .then( doc => res.send(doc), e => res.status(400).send(e) )
+})
+
 
 app.listen(PORT, () => console.log(`Started on port: ${PORT}`) )
 
